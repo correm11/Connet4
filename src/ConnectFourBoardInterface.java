@@ -1,7 +1,7 @@
 
-public interface ConnectFourBoard {
+public interface ConnectFourBoardInterface {
 
-	public void copyBoard(ConnectFourBoard source);
+	public void copyBoard(ConnectFourBoardInterface source);
 	
 	public boolean move(int column);
 	
