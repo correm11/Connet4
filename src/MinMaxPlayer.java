@@ -3,11 +3,11 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 
 	@Override
 	public int getMin(Node n) {
-		if(n.isLeaf() || n.getBoard().winner()!=-1){//if a leaf or game ended (terminal node)
+		if(n.isLeaf() || n.getBoard().hasFinished()){//if a leaf or game ended
 			return this.getUtilityValue(n);
 		}
 		else{
-			n.setValue(999);
+			n.setValue(Integer.MAX_VALUE);
 			for(Node child: n.getChildren()){
 				int maxValue = getMin(child);
 				if(maxValue < n.getValue()){
@@ -20,11 +20,11 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 
 	@Override
 	public int getMax(Node n) {
-		if(n.isLeaf() || n.getBoard().winner()!=-1){//if a leaf or game ended (terminal node)
+		if(n.isLeaf() || n.getBoard().hasFinished()){//if a leaf or game ended
 			return this.getUtilityValue(n);
 		}
 		else{
-			n.setValue(-999);
+			n.setValue(Integer.MIN_VALUE);
 			for(Node child: n.getChildren()){
 				int minValue = getMin(child);
 				if(minValue > n.getValue()){
