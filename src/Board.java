@@ -78,7 +78,7 @@ public class Board implements ConnectFourBoardInterface{
 	@Override
 	public int getColumn(int column) {
 		
-		if(column < 0 || column >6){
+		if(column < 0 || column > this.amountOfColums){
 			throw new IndexOutOfBoundsException();
 		}
 		
