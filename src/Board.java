@@ -48,6 +48,8 @@ public class Board implements ConnectFourBoardInterface{
 	@Override
 	public int winner() {
 		// TODO Auto-generated method stub
+		
+		
 		return 0;
 	}
 
