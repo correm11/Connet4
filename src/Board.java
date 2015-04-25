@@ -37,7 +37,39 @@ public class Board implements ConnectFourBoardInterface{
 	@Override
 	public boolean move(int column) {
 		// TODO Auto-generated method stub
-		return false;
+		
+		  if ( (column<0) || (column >6)){
+	            System.out.println("invalid input\n\n");
+		  		return false;
+		  }
+	        else{
+	            if ((this.column[column]==6)){
+	                System.out.println("Column full");
+	            	return false;
+	            }
+	            else{
+	            int pos_y=column;
+	            int pos_x= 5-this.column[column];
+	            this.column[column]++; 
+	            this.board[pos_x][pos_y] = this.player;
+	            this.player = this.changePlayer();
+	            return true;
+	         
+	            }
+	        }	
+	
+	}
+	
+	  /*
+     * Method to change the player.
+     */
+    private int changePlayer() {
+		if(this.player == 1){
+			return 2;
+		}
+		else{
+			return 1;
+		}
 	}
 
 	@Override
