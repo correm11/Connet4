@@ -1,20 +1,26 @@
 
 public class MinMaxPlayer implements MinMaxPlayerInterface {
 
+	private Tree currentTree;
+	
+	public MinMaxPlayer() {
+		this.currentTree = new Tree(new Board(1,7,6));
+	}
+
 	@Override
 	public int getMin(Node n) {
 		if(n.isLeaf() || n.getBoard().hasFinished()){//if a leaf or game ended
 			return this.getUtilityValue(n);
 		}
 		else{
-			n.setValue(Integer.MAX_VALUE);
+			n.setMinMaxValue(Integer.MAX_VALUE);
 			for(Node child: n.getChildren()){
-				int maxValue = getMin(child);
-				if(maxValue < n.getValue()){
-					n.setValue(maxValue);
+				int maxValue = getMax(child);
+				if(maxValue < n.getMinMaxValue()){
+					n.setMinMaxValue(maxValue);
 				}
 			}
-			return n.getValue();
+			return n.getMinMaxValue();
 		}
 	}
 
@@ -24,34 +30,46 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 			return this.getUtilityValue(n);
 		}
 		else{
-			n.setValue(Integer.MIN_VALUE);
+			n.setMinMaxValue(Integer.MIN_VALUE);
 			for(Node child: n.getChildren()){
 				int minValue = getMin(child);
-				if(minValue > n.getValue()){
-					n.setValue(minValue);
+				if(minValue > n.getMinMaxValue()){
+					n.setMinMaxValue(minValue);
 				}
 			}
-			return n.getValue();
+			return n.getMinMaxValue();
 		}
 	}
 
 	@Override
 	public int minMaxResult(Node n) {
-		
-		return 0;
+		int nMinMaxValue = 0;
+		if(n.getBoard().nextPlayer()==0){
+			nMinMaxValue = this.getMin(n);
+		}
+		else{
+			nMinMaxValue = this.getMax(n);
+		}
+		int moveTo = 0;
+		for(Node child: n.getChildren()){
+			if(child.getMinMaxValue()==nMinMaxValue){
+				//move to the node with that minimax value
+				moveTo = child.getIdentifier();
+				break;
+			}
+		}
+		return moveTo;
 	}
 
 	@Override
-	public void minMaxTurn(Node n) {
-		// TODO Auto-generated method stub
-		
+	public void minMaxTurn(Board gameBoard) {
+		Board newBoard = new Board(1,7,6);
+		newBoard.copyBoard(gameBoard);
+		this.currentTree = new Tree(newBoard);//creates a tree with its children (4 levels) and the root node that contains the newBoard
+		int moveTo = this.minMaxResult(this.currentTree.getRoot());
+		gameBoard.move(moveTo);
 	}
 
-	@Override
-	public int getDepth() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public int getUtilityValue(Node n) {
