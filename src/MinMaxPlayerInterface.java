@@ -7,7 +7,7 @@ public interface MinMaxPlayerInterface {
 	
 	public int minMaxResult(Node n);
 	
-	public void minMaxTurn(Board gameBoard);
+	public void minMaxTurn(Board currentGameBoard);
 	
 	public int getUtilityValue(Node n);
 }

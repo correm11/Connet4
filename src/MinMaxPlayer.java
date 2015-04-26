@@ -3,8 +3,8 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 
 	private Tree currentTree;
 	
-	public MinMaxPlayer() {
-		this.currentTree = new Tree(new Board(1,7,6));
+	public MinMaxPlayer(Board gameBoard) {
+		this.currentTree = new Tree(gameBoard);
 	}
 
 	@Override
@@ -62,12 +62,12 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 	}
 
 	@Override
-	public void minMaxTurn(Board gameBoard) {
-		Board newBoard = new Board(1,7,6);
-		newBoard.copyBoard(gameBoard);
-		this.currentTree = new Tree(newBoard);//creates a tree with its children (4 levels) and the root node that contains the newBoard
+	public void minMaxTurn(Board currentGameBoard) {
+		//Board newBoard = new Board(1,7,6);
+		//newBoard.copyBoard(currentGameBoard);
+		this.currentTree = new Tree(currentGameBoard);//creates a tree with its children (4 levels) and the root node that contains the newBoard
 		int moveTo = this.minMaxResult(this.currentTree.getRoot());
-		gameBoard.move(moveTo);
+		currentGameBoard.move(moveTo);
 	}
 
 
