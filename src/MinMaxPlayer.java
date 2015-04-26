@@ -74,9 +74,9 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 	@Override
 	public int getUtilityValue(Node n) {
 		// TODO Auto-generated method stub
+		
+		
 		return 0;
-	}
-	
-	
+	}	
 
 }

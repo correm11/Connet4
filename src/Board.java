@@ -302,4 +302,34 @@ public class Board implements ConnectFourBoardInterface{
 		return this.amountOfColums;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		String result = "    ";
+		
+		for(int i = 0; i < this.getAmountOfColums(); i++){						
+			if(i == (this.getAmountOfColums() - 1)){
+				result += i + "\n";
+			}
+			else{
+				result += i + " , ";
+			}
+		}
+
+		for(int i = 0; i < this.getAmountOfRows(); i++){
+			result += (this.getAmountOfRows() - i) + " [ "; 
+			for(int j = 0; j < this.getAmountOfColums(); j++){
+				if(j == (this.getAmountOfColums() - 1)){
+					result += this.board[i][j] + " ]\n";
+				}
+				else{
+					result += this.board[i][j] + " , ";
+				}
+			}
+		}
+		
+		return result;
+	}
 }
