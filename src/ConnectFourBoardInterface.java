@@ -7,8 +7,6 @@ public interface ConnectFourBoardInterface {
 	public boolean move(int column);
 	//manuel
 	public int nextPlayer();
-	//juan
-	public int winner();
 	//manuel
 	public int[][] getState();
 	//juan
