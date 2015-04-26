@@ -3,7 +3,8 @@ import java.util.ArrayList;
 public class Node {
 	private int identifier;//in which column the token is thrown
 	private int depth;
-	//private int value;
+	private int value;//heuristic value
+	private int turnPlayer;
 	private Board stateBoard;
 	private ArrayList<Node> children;
 	
@@ -28,5 +29,17 @@ public class Node {
 	
 	public ArrayList<Node> getChildren(){
 		return this.children;
+	}
+	
+	public boolean isLeaf(){
+		return this.depth == Tree.MAX_DEPTH;
+	}
+	
+	public int getValue(){
+		return this.value;
+	}
+	
+	public void setValue(int value){
+		this.value = value;
 	}
 }

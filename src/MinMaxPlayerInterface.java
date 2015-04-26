@@ -1,17 +1,15 @@
 
 public interface MinMaxPlayerInterface {
 
-	public int getMin(Tree g);
+	public int getMin(Node n);
 	
-	public int getMax(Tree g);
+	public int getMax(Node n);
 	
-	public int minMaxResult(Tree g);
+	public int minMaxResult(Node n);
 	
-	public boolean isLeaf(Tree g);
-	
-	public void minMaxTurn(Tree g);
+	public void minMaxTurn(Node n);
 	
 	public int getDepth();
 	
-	public int getHeuristic();
+	public int getUtilityValue(Node n);
 }
