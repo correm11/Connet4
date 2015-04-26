@@ -241,6 +241,18 @@ public class Board implements ConnectFourBoardInterface{
 	public int getWinner(){
 		return this.winner;
 	}
+	
+	public boolean hasFinished(){
+		boolean result = true;
+		
+		for(int i = 0; i < this.column.length; i++){
+			if(this.getColumn(i) != this.getAmountOfColums()){
+				result = false;
+			}
+		}
+		
+		return hasWinner() || result;
+	}
 
 	@Override
 	public int[][] getState() {

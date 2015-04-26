@@ -1,15 +1,15 @@
 
 public interface MinMaxPlayerInterface {
 
-	public int getMin(Graph g);
+	public int getMin(Tree g);
 	
-	public int getMax(Graph g);
+	public int getMax(Tree g);
 	
-	public int minMaxResult(Graph g);
+	public int minMaxResult(Tree g);
 	
-	public boolean isLeaf(Graph g);
+	public boolean isLeaf(Tree g);
 	
-	public void minMaxTurn(Graph g);
+	public void minMaxTurn(Tree g);
 	
 	public int getDepth();
 	
