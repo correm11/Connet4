@@ -47,15 +47,15 @@ public class Board implements ConnectFourBoardInterface{
 		}
 		else{
 			if ((this.column[column] == this.getAmountOfColums() - 1)){
-				System.out.println("Column full");
+				System.out.println("Column " + column + " full");
 				return false;
 			}
 			else{
 				this.pos_y=column;
 				this.pos_x= (this.getAmountOfColums() - 2) - this.column[column];
 				this.column[column]++; 
-				this.board[this.pos_x][this.pos_y] = this.player;
-				this.changePlayer();
+				this.board[this.pos_x][this.pos_y] = this.player; //el player que juega este state.
+				this.changePlayer();//this.player =  al player que le toca en el siguiente turno.
 				//winner method verify if the game has a winner
 				this.winner();
 
