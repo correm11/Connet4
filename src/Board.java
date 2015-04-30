@@ -7,6 +7,7 @@ public class Board implements ConnectFourBoardInterface{
 	private int amountOfRows;
 	private int amountOfColums;
 	private int winner;
+	private int pos_x, pos_y;
 
 	/**
 	 * Constructor
@@ -22,6 +23,8 @@ public class Board implements ConnectFourBoardInterface{
 		this.column = new int[amountOfColumns];
 		this.player = player;
 		this.winner = -1;
+		this.pos_y = 0;
+		this.pos_x = 0;
 
 	}
 
@@ -48,10 +51,10 @@ public class Board implements ConnectFourBoardInterface{
 				return false;
 			}
 			else{
-				int pos_y=column;
-				int pos_x= (this.getAmountOfColums() - 2) - this.column[column];
+				this.pos_y=column;
+				this.pos_x= (this.getAmountOfColums() - 2) - this.column[column];
 				this.column[column]++; 
-				this.board[pos_x][pos_y] = this.player;
+				this.board[this.pos_x][this.pos_y] = this.player;
 				this.changePlayer();
 				//winner method verify if the game has a winner
 				this.winner();
@@ -60,11 +63,19 @@ public class Board implements ConnectFourBoardInterface{
 			}
 		}
 	}
+	
+	public int getMoveRow(){
+		return this.pos_x;
+	}
+	
+	public int getMoveCol(){
+		return this.pos_y;
+	}
 
 	/*
 	 * Method to change the player.
 	 */
-	private void changePlayer() {
+	public void changePlayer() {
 		if(this.player == 1){
 			this.player = 2;
 		}
@@ -242,6 +253,10 @@ public class Board implements ConnectFourBoardInterface{
 		return this.winner;
 	}
 	
+	public int[][] getBoardState(){
+		return this.board;
+	}
+	
 	public boolean hasFinished(){
 		boolean result = true;
 		
@@ -255,7 +270,7 @@ public class Board implements ConnectFourBoardInterface{
 	}
 
 	@Override
-	public int[][] getState() {
+	public int[][] getState() {//makes a copy
 		int[][] result = new int[this.getAmountOfRows()][this.getAmountOfColums()];
 
 		for(int i = 0; i < this.getAmountOfRows(); i++){
@@ -332,4 +347,5 @@ public class Board implements ConnectFourBoardInterface{
 		
 		return result;
 	}
+
 }
