@@ -261,7 +261,7 @@ public class Board implements ConnectFourBoardInterface{
 		boolean result = true;
 		
 		for(int i = 0; i < this.column.length; i++){
-			if(this.getColumn(i) != this.getAmountOfColums()){
+			if(this.getColumn(i) < this.getAmountOfRows()){ //amountOfRows = 6
 				result = false;
 			}
 		}

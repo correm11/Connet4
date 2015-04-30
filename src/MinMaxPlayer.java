@@ -10,6 +10,7 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 	@Override
 	public int getMin(Node n) {
 		if(n.isLeaf() || n.getBoard().hasFinished()){//if a leaf or game ended
+			System.out.println("DONE!!!!!!: getMin from: \n" + n.getBoard().toString());
 			return this.getUtilityValue(n);
 		}
 		else{
@@ -27,6 +28,7 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 	@Override
 	public int getMax(Node n) {
 		if(n.isLeaf() || n.getBoard().hasFinished()){//if a leaf or game ended
+			System.out.println("DONE!!!!!!: getMax from: \n" + n.getBoard().toString());
 			return this.getUtilityValue(n);
 		}
 		else{
@@ -87,12 +89,15 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 		
 		//check if game is over (who won, or if tie)
 		if(n.getBoard().hasFinished()){
+			
+			//System.out.println("Finishing board: \n" + n.getBoard().toString());
+			
 			if(n.getBoard().getWinner() == Play.HUMAN){//human
-				System.out.println("HUMAN WON!");
+				//System.out.println("HUMAN WON!");
 				return -500;
 			}
 			else if(n.getBoard().getWinner() == Play.MACHINE){//machine
-				System.out.println("MACHINE WON!");
+				//System.out.println("MACHINE WON!");
 				return 500;
 			}
 			else{//tie
