@@ -2,15 +2,15 @@
 public class MinMaxPlayer implements MinMaxPlayerInterface {
 	private Tree currentTree;
 	
-	public MinMaxPlayer(Board gameBoard) {
-		//this.currentTree = new Tree(new Board(1,7,6));
-		this.currentTree = new Tree(gameBoard);
+	public MinMaxPlayer() {
+		//this.currentTree = new Tree(new Board(Play.HUMAN,7,6));
+		//this.currentTree = new Tree(gameBoard);
 	}
 
 	@Override
 	public int getMin(Node n) {
 		if(n.isLeaf() || n.getBoard().hasFinished()){//if a leaf or game ended
-			System.out.println("DONE!!!!!!: getMin from: \n" + n.getBoard().toString());
+			//System.out.println("DONE!!!!!!: getMin from: \n" + n.getBoard().toString());
 			return this.getUtilityValue(n);
 		}
 		else{
@@ -28,7 +28,7 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 	@Override
 	public int getMax(Node n) {
 		if(n.isLeaf() || n.getBoard().hasFinished()){//if a leaf or game ended
-			System.out.println("DONE!!!!!!: getMax from: \n" + n.getBoard().toString());
+			//System.out.println("DONE!!!!!!: getMax from: \n" + n.getBoard().toString());
 			return this.getUtilityValue(n);
 		}
 		else{
@@ -47,28 +47,36 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 	//n=> root node of the current tree
 	public int minMaxResult(Node n) {
 		int nMinMaxValue = 0;
-		//if(n.getBoard().nextPlayer() == Play.HUMAN){///////////////////
-		//	System.out.println("N board player = HUMAN");
-		//	nMinMaxValue = this.getMin(n);
-		//}
-		//else{
-		//	System.out.println("N board player = MACHINE");
-		//	nMinMaxValue = this.getMax(n);
-		//}
+		
+//		if(n.getBoard().nextPlayer() == Play.HUMAN){///////////////////
+//			System.out.println("N board player = HUMAN");
+//			nMinMaxValue = this.getMin(n);
+//		}
+//		else{
+//			System.out.println("N board player = MACHINE");
+//			nMinMaxValue = this.getMax(n);
+//		}
 		
 		nMinMaxValue = this.getMax(n);
-		System.out.println("MINMAX VALUE = " + nMinMaxValue);
+		this.currentTree.iterate(n);
+		//System.out.println("MINMAX VALUE = " + nMinMaxValue);
 		int moveTo = 0;
-		System.out.println("Children: " + n.getChildren().size());
+		//System.out.println("Children: " + n.getChildren().size());
+		//System.out.println("MINMAX VALUE = " + nMinMaxValue);
 		for(Node child: n.getChildren()){
-			System.out.println("Iterando...");
+			//System.out.println("Iterando...");
+			//System.out.println("Identifier = " + child.getIdentifier());
+			//System.out.println("child min max value = " + child.getMinMaxValue());
 			if(child.getMinMaxValue()==nMinMaxValue){
 				//move to the node with that minimax value
 				moveTo = child.getIdentifier();
-				System.out.println("moveTo!!!! = " + moveTo);
+				//System.out.println("moveTo!!!! = " + moveTo);
 				break;
 			}
 		}
+//		while(n.getBoard().getColumn(moveTo) >= 6){
+//			moveTo++;
+//		}
 		return moveTo;
 	}
 
@@ -93,15 +101,20 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 			//System.out.println("Finishing board: \n" + n.getBoard().toString());
 			
 			if(n.getBoard().getWinner() == Play.HUMAN){//human
-				//System.out.println("HUMAN WON!");
+//				System.out.println("HUMAN WON! \n");
+//				System.out.println(n.getBoard());
+				n.setMinMaxValue(-500);
 				return -500;
 			}
 			else if(n.getBoard().getWinner() == Play.MACHINE){//machine
-				//System.out.println("MACHINE WON!");
+//				System.out.println("MACHINE WON!");
+//				System.out.println(n.getBoard());
+				n.setMinMaxValue(500);
 				return 500;
 			}
 			else{//tie
-				System.out.println("TIEEEEEEEEEEE!");
+//				System.out.println("TIEEEEEEEEEEE!");
+				n.setMinMaxValue(0);
 				return 0;
 			}
 		}
@@ -250,9 +263,18 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 		}
 		
 		
+
+
+		
+		
+		
 		//System.out.println("returning h = " + h + " for s["+ row +"]["+col+"]");
+		
+		
 		
 		return h;
 	}
 	
+	
+
 }

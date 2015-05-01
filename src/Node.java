@@ -12,6 +12,7 @@ public class Node {
 		this.depth = depth;
 		this.stateBoard = stateBoard;
 		this.children = new ArrayList<Node>();
+		this.minMaxValue = -2;
 	}
 	
 	public void addChild(Node childNode){

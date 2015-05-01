@@ -8,6 +8,8 @@ public class Tree {
 	//currentStateBoard => root (resultado de la movida del human, nextPlayer = MACHINE)
 	public Tree(Board currentStateBoard){
 		this.root = new Node(-1, 0, currentStateBoard);
+		//System.out.println("Board(root): " + ++count + "\n");
+		//System.out.println(this.root.getBoard());
 		this.generateChildren(this.root);
 	}
 
@@ -20,8 +22,15 @@ public class Tree {
 				currentBoard.move(i);//se hace la movida & se invierte el nextPlayer.
 				Node child = new Node(i,parent.getDepth()+1, currentBoard);
 				parent.addChild(child);
-				//System.out.println("Board: " + ++count + "\n");
-				//System.out.println("Parent:\n" + parent.getBoard() + "Child:\n" + currentBoard);
+//				if(child.isLeaf()){
+//					System.out.println("Board (leaf): " + ++count + "\n");
+//					System.out.println(child.getBoard());
+//				}
+//				else{
+//					System.out.println("Board: " + ++count + "\n");
+//					System.out.println(child.getBoard());
+//				}
+
 				if(child.getDepth()<MAX_DEPTH){
 					this.generateChildren(child);
 				}
@@ -32,4 +41,18 @@ public class Tree {
 	public Node getRoot(){
 		return this.root;
 	}
+	
+	public void iterate(Node parent){
+		for(Node child: parent.getChildren()){
+			//System.out.println("Value("+ count++ +") = " + child.getMinMaxValue());
+			if(child.isLeaf()){
+				return;
+			}
+			else{
+				iterate(child);
+			}
+		}
+	}
+	
+
 }
