@@ -1,15 +1,20 @@
 import java.util.Scanner;
 
-public class Play {
 
+public class Play {
+	
+	public static final int HUMAN = 1;
+	public static final int MACHINE = 2;
+	
 	public static void main(String[] args) {
-		Board gameBoard = new Board(1, 7, 6);
+		//Board gameBoard = new Board(MACHINE, 7, 6);
+		Board gameBoard = new Board(HUMAN, 7, 6);//Un board donde el human va a hacer la movida.
 		MinMaxPlayer machine = new MinMaxPlayer(gameBoard);
 		
 		while(!gameBoard.hasFinished()){
 			System.out.println(gameBoard.toString());
 			
-			if(gameBoard.nextPlayer() == 0){
+			if(gameBoard.nextPlayer() == MACHINE){
 				machine.minMaxTurn(gameBoard);
 			}
 			else{
@@ -25,5 +30,9 @@ public class Play {
 				}
 			}
 		}
+		System.out.println("GAME ENDED!");
+		System.out.println(gameBoard.toString());
+
 	}
+
 }
