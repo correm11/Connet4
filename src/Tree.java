@@ -28,6 +28,4 @@ public class Tree {
 	public Node getRoot(){
 		return this.root;
 	}
-	
-
 }

@@ -76,6 +76,7 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 		// TODO Auto-generated method stub
 		
 		
+		
 		return 0;
 	}	
 
