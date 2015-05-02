@@ -70,7 +70,7 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 			if(child.getMinMaxValue()==nMinMaxValue){
 				//move to the node with that minimax value
 				moveTo = child.getIdentifier();
-				//System.out.println("moveTo!!!! = " + moveTo);
+				System.out.println("machine play = " + moveTo);
 				break;
 			}
 		}
@@ -271,7 +271,7 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 		//System.out.println("returning h = " + h + " for s["+ row +"]["+col+"]");
 		
 		
-		
+		n.setMinMaxValue(h);
 		return h;
 	}
 	

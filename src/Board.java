@@ -265,6 +265,15 @@ public class Board implements ConnectFourBoardInterface{
 				result = false;
 			}
 		}
+//		if(result){
+//			System.out.println("ALL COLUMNS FULL");
+//		}
+//		else{
+//			System.out.println("COLUMNS ARE NOT FULL");
+//		}
+		
+		if(hasWinner())
+			System.out.println("hasWinner state: \n" + this.toString());
 		
 		return hasWinner() || result;
 	}
