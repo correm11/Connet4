@@ -32,13 +32,13 @@ public class Play {
 		}
 		//Game ended:
 		if(gameBoard.getWinner()==HUMAN){
-			System.out.println("YOU WON!");
+			System.out.println("::::::::YOU WON!::::::::");
 		}
 		else if(gameBoard.getWinner()==MACHINE){
-			System.out.println("MACHINE WON!");
+			System.out.println("::::::::MACHINE WON!::::::::");
 		}
 		else{
-			System.out.println("GAME ENDED WITH TIE!");
+			System.out.println("::::::::GAME ENDED IN A DRAW!::::::::");
 		}
 		System.out.println(gameBoard.toString());
 

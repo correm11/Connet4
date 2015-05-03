@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Tree {
 	public static final int MAX_DEPTH = 6;
 	

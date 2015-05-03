@@ -58,7 +58,7 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 		//		}
 
 		nMinMaxValue = this.getMax(n);
-		this.currentTree.iterate(n);
+		//this.currentTree.iterate(n);
 		//System.out.println("MINMAX VALUE = " + nMinMaxValue);
 		int moveTo = 0;
 		//System.out.println("Children: " + n.getChildren().size());
