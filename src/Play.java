@@ -22,7 +22,7 @@ public class Play {
 				Scanner in = new Scanner(System.in);
 				int input = in.nextInt();
 				if(input>=0 && input <=6){
-					System.out.println("Throwing token into column " + input);
+					System.out.println("Human throwing token into column " + input);
 					gameBoard.move(input);//moves and changes next player to MACHINE
 				}
 				else{
@@ -30,7 +30,16 @@ public class Play {
 				}
 			}
 		}
-		System.out.println("GAME ENDED!");
+		//Game ended:
+		if(gameBoard.getWinner()==HUMAN){
+			System.out.println("YOU WON!");
+		}
+		else if(gameBoard.getWinner()==MACHINE){
+			System.out.println("MACHINE WON!");
+		}
+		else{
+			System.out.println("GAME ENDED WITH TIE!");
+		}
 		System.out.println(gameBoard.toString());
 
 	}

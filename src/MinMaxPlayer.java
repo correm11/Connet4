@@ -1,7 +1,7 @@
 
 public class MinMaxPlayer implements MinMaxPlayerInterface {
 	private Tree currentTree;
-	
+
 	public MinMaxPlayer() {
 		//this.currentTree = new Tree(new Board(Play.HUMAN,7,6));
 		//this.currentTree = new Tree(gameBoard);
@@ -14,7 +14,7 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 			return this.getUtilityValue(n);
 		}
 		else{
-			n.setMinMaxValue(500);
+			n.setMinMaxValue(Integer.MAX_VALUE);
 			for(Node child: n.getChildren()){
 				int maxValue = getMax(child);
 				if(maxValue < n.getMinMaxValue()){
@@ -32,7 +32,7 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 			return this.getUtilityValue(n);
 		}
 		else{
-			n.setMinMaxValue(-500);
+			n.setMinMaxValue(Integer.MIN_VALUE);
 			for(Node child: n.getChildren()){
 				int minValue = getMin(child);
 				if(minValue > n.getMinMaxValue()){
@@ -47,16 +47,16 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 	//n=> root node of the current tree
 	public int minMaxResult(Node n) {
 		int nMinMaxValue = 0;
-		
-//		if(n.getBoard().nextPlayer() == Play.HUMAN){///////////////////
-//			System.out.println("N board player = HUMAN");
-//			nMinMaxValue = this.getMin(n);
-//		}
-//		else{
-//			System.out.println("N board player = MACHINE");
-//			nMinMaxValue = this.getMax(n);
-//		}
-		
+
+		//		if(n.getBoard().nextPlayer() == Play.HUMAN){///////////////////
+		//			System.out.println("N board player = HUMAN");
+		//			nMinMaxValue = this.getMin(n);
+		//		}
+		//		else{
+		//			System.out.println("N board player = MACHINE");
+		//			nMinMaxValue = this.getMax(n);
+		//		}
+
 		nMinMaxValue = this.getMax(n);
 		this.currentTree.iterate(n);
 		//System.out.println("MINMAX VALUE = " + nMinMaxValue);
@@ -70,13 +70,13 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 			if(child.getMinMaxValue()==nMinMaxValue){
 				//move to the node with that minimax value
 				moveTo = child.getIdentifier();
-				System.out.println("machine play = " + moveTo);
+				System.out.println("Machine throwing token into column  " + moveTo);
 				break;
 			}
 		}
-//		while(n.getBoard().getColumn(moveTo) >= 6){
-//			moveTo++;
-//		}
+		//		while(n.getBoard().getColumn(moveTo) >= 6){
+		//			moveTo++;
+		//		}
 		return moveTo;
 	}
 
@@ -87,6 +87,7 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 		Board newBoard = new Board(-1,7,6);
 		newBoard.copyBoard(currentGameBoard);
 		this.currentTree = new Tree(newBoard);//creates a tree with its children (4 levels) and the root node that contains a copy of currentBoard
+		System.out.println("Total number of nodes generated: " + this.currentTree.getNumNodes());
 		int moveTo = this.minMaxResult(this.currentTree.getRoot());
 		currentGameBoard.move(moveTo);
 	}
@@ -94,187 +95,314 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 
 	@Override
 	public int getUtilityValue(Node n) {
-		
-		//check if game is over (who won, or if tie)
-		if(n.getBoard().hasFinished()){
-			
-			//System.out.println("Finishing board: \n" + n.getBoard().toString());
-			
-			if(n.getBoard().getWinner() == Play.HUMAN){//human
-//				System.out.println("HUMAN WON! \n");
-//				System.out.println(n.getBoard());
-				n.setMinMaxValue(-500);
-				return -500;
-			}
-			else if(n.getBoard().getWinner() == Play.MACHINE){//machine
-//				System.out.println("MACHINE WON!");
-//				System.out.println(n.getBoard());
-				n.setMinMaxValue(500);
-				return 500;
-			}
-			else{//tie
-//				System.out.println("TIEEEEEEEEEEE!");
-				n.setMinMaxValue(0);
-				return 0;
-			}
-		}
 		int h = 0;
 		int[][] s = n.getBoard().getBoardState();
 		int col = n.getBoard().getMoveCol();
 		int row = n.getBoard().getMoveRow();
 		int ma = Play.MACHINE;
 		int hu = Play.HUMAN;
-		
 
-		/////Horizontal/////
-		//Contando 4 fichas (winning turn)
-		if(col>=3 && s[row][col-1] == ma && s[row][col-2] == ma && s[row][col-3] == ma ){
-			h+=400;
-		}
-		if(col>=2 && col<=5 && s[row][col-1] == ma && s[row][col-2] == ma && s[row][col+1] == ma ){
-			h+=400;
-		}
-		if(col>=1 && col<=4 && s[row][col-1] == ma && s[row][col+1] == ma && s[row][col+2] == ma ){
-			h+=400;
-		}
-		if(col<=3 && s[row][col+1] == ma && s[row][col+2] == ma && s[row][col+3] == ma ){
-			h+=400;
-		}
-		
-		//Contando 3 fichas
-		if(col>=2 && s[row][col-1] == ma && s[row][col-2] == ma ){
-			h+=300;
-		}
-		if(col<=4 && s[row][col+1] == ma && s[row][col+2] == ma){
-			h+=300;
-		}
-		if(col>=1 && col<=5 && s[row][col-1] == ma && s[row][col+1] == ma){
-			h+=300;
-		}
-		
-		//Contando 2 fichas
-		if(col>=1 && s[row][col-1] == ma){
-			h+=200;
-		}
-		if(col<=5 && s[row][col+1] == ma){
-			h+=200;
-		}
-		
-		/////Vertical/////
-		//Contando 4 fichas (winning turn)
-		if(row>=3 && s[row-1][col] == ma && s[row-2][col] == ma && s[row-3][col] == ma ){
-			h+=400;
-		}
-		if(row>=1 && row<=3 && s[row-1][col] == ma && s[row+1][col] == ma && s[row+2][col] == ma ){
-			h+=400;
-		}
-		if(row>=2 && row<=4 && s[row-1][col] == ma && s[row-2][col] == ma && s[row+1][col] == ma ){
-			h+=400;
-		}
-		if(row<=2 && s[row+1][col] == ma && s[row+2][col] == ma && s[row+3][col] == ma ){
-			h+=400;
-		}
-		
-		//Contando 3 fichas
-		if(row>=2 && s[row-1][col] == ma && s[row-2][col] == ma){
-			h+=300;
-		}
-		if(row>=1 && row<=4 && s[row-1][col] == ma && s[row+1][col] == ma){
-			h+=300;
-		}
-		if(row<=3 && s[row+1][col] == ma && s[row+2][col] == ma){
-			h+=300;
-		}
-		
-		//Contando 2 fichas
-		if(row>=1 && s[row-1][col] == ma){
-			h+=200;
-		}
-		if(row<=4 &&  s[row+1][col] == ma){
-			h+=200;
-		}
-		
-		/////Diagonals//////
-		
-		//Contando 4 fichas (\)
-		if(col>=3 && row>=3 && s[row-1][col-1] == ma && s[row-2][col-2] == ma && s[row-3][col-3] == ma ){
-			h+=400;
-		}
-		if(col>=2 && col<=5 && row>=2 && row<=4 && s[row-1][col-1] == ma && s[row-2][col-2] == ma && s[row+1][col+1] == ma ){
-			h+=400;
-		}
-		if(col>=1 && col<=4 && row>=1 && row<=3 && s[row-1][col-1] == ma && s[row+1][col+1] == ma && s[row+2][col+2] == ma ){
-			h+=400;
-		}
-		if(col<=3 && row<=2 && s[row+1][col+1] == ma && s[row+2][col+2] == ma && s[row+3][col+3] == ma ){
-			h+=400;
-		}
-		
-		//Contando 3 fichas
-		if(col>=2 && row>=2 && s[row-1][col-1] == ma && s[row-2][col-2] == ma){
-			h+=300;
-		}
-		if(col>=1 && col<=5 && row>=1 && row<=4 && s[row-1][col-1] == ma && s[row+1][col+1] == ma){
-			h+=300;
-		}
-		if(col<=4 && row<=3 && s[row+1][col+1] == ma && s[row+2][col+2] == ma){
-			h+=300;
-		}
-		
-		//Contando 2 fichas
-		if(col>=1 && row>=1 && s[row-1][col-1] == ma){
-			h+=200;
-		}
-		if(col<=5 && row<=4 && s[row+1][col+1] == ma){
-			h+=200;
-		}
-		
-		//Contando 4 fichas(/)
-		if(col<=3 && row>=3 && s[row-1][col+1] == ma && s[row-2][col+2] == ma && s[row-3][col+3] == ma ){
-			h+=400;
-		}
-		if(col>=1 && col<=4 && row>=2 && row<=4 && s[row-1][col+1] == ma && s[row-2][col+2] == ma && s[row+1][col-1] == ma ){
-			h+=400;
-		}
-		if(col>=2 && col<=5 && row>=1 && row<=3 && s[row-1][col+1] == ma && s[row+1][col-1] == ma && s[row+2][col-2] == ma ){
-			h+=400;
-		}
-		if(col>=3 && row<=2 && s[row+1][col-1] == ma && s[row+2][col-2] == ma && s[row+3][col-3] == ma ){
-			h+=400;
-		}
-		
-		//Contando 3 fichas
-		if(col<=4 && row>=2 && s[row-1][col+1] == ma && s[row-2][col+2] == ma){
-			h+=300;
-		}
-		if(col>=1 && col<=5 && row>=1 && row<=4 && s[row-1][col+1] == ma && s[row+1][col-1] == ma){
-			h+=300;
-		}
-		if(col>=2 && row<=3 && s[row+1][col-1] == ma && s[row+2][col-2] == ma){
-			h+=300;
-		}
-		
-		//Contando 2 fichas
-		if(col<=5 && row>=1 && s[row-1][col+1] == ma){
-			h+=200;
-		}
-		if(col>=1 && row<=4 && s[row+1][col-1] == ma){
-			h+=200;
-		}
-		
-		
+		if(!n.getBoard().hasFinished()){ //game is not over, calculate value of h.
+			/////Horizontal/////
+			//Contando 4 fichas (winning turn)
+			if(col>=3 && s[row][col-1] == ma && s[row][col-2] == ma && s[row][col-3] == ma ){
+				h+=400;
+			}
+			if(col>=2 && col<=5 && s[row][col-1] == ma && s[row][col-2] == ma && s[row][col+1] == ma ){
+				h+=400;
+			}
+			if(col>=1 && col<=4 && s[row][col-1] == ma && s[row][col+1] == ma && s[row][col+2] == ma ){
+				h+=400;
+			}
+			if(col<=3 && s[row][col+1] == ma && s[row][col+2] == ma && s[row][col+3] == ma ){
+				h+=400;
+			}
+
+			//Contando 3 fichas
+			if(col>=2 && s[row][col-1] == ma && s[row][col-2] == ma ){
+				h+=300;
+			}
+			if(col<=4 && s[row][col+1] == ma && s[row][col+2] == ma){
+				h+=300;
+			}
+			if(col>=1 && col<=5 && s[row][col-1] == ma && s[row][col+1] == ma){
+				h+=300;
+			}
+
+			//Contando 2 fichas
+			if(col>=1 && s[row][col-1] == ma){
+				h+=200;
+			}
+			if(col<=5 && s[row][col+1] == ma){
+				h+=200;
+			}
+
+			/////Vertical/////
+			//Contando 4 fichas (winning turn)
+			if(row>=3 && s[row-1][col] == ma && s[row-2][col] == ma && s[row-3][col] == ma ){
+				h+=400;
+			}
+			if(row>=1 && row<=3 && s[row-1][col] == ma && s[row+1][col] == ma && s[row+2][col] == ma ){
+				h+=400;
+			}
+			if(row>=2 && row<=4 && s[row-1][col] == ma && s[row-2][col] == ma && s[row+1][col] == ma ){
+				h+=400;
+			}
+			if(row<=2 && s[row+1][col] == ma && s[row+2][col] == ma && s[row+3][col] == ma ){
+				h+=400;
+			}
+
+			//Contando 3 fichas
+			if(row>=2 && s[row-1][col] == ma && s[row-2][col] == ma){
+				h+=300;
+			}
+			if(row>=1 && row<=4 && s[row-1][col] == ma && s[row+1][col] == ma){
+				h+=300;
+			}
+			if(row<=3 && s[row+1][col] == ma && s[row+2][col] == ma){
+				h+=300;
+			}
+
+			//Contando 2 fichas
+			if(row>=1 && s[row-1][col] == ma){
+				h+=200;
+			}
+			if(row<=4 &&  s[row+1][col] == ma){
+				h+=200;
+			}
+
+			/////Diagonals//////
+
+			//Contando 4 fichas (\)
+			if(col>=3 && row>=3 && s[row-1][col-1] == ma && s[row-2][col-2] == ma && s[row-3][col-3] == ma ){
+				h+=400;
+			}
+			if(col>=2 && col<=5 && row>=2 && row<=4 && s[row-1][col-1] == ma && s[row-2][col-2] == ma && s[row+1][col+1] == ma ){
+				h+=400;
+			}
+			if(col>=1 && col<=4 && row>=1 && row<=3 && s[row-1][col-1] == ma && s[row+1][col+1] == ma && s[row+2][col+2] == ma ){
+				h+=400;
+			}
+			if(col<=3 && row<=2 && s[row+1][col+1] == ma && s[row+2][col+2] == ma && s[row+3][col+3] == ma ){
+				h+=400;
+			}
+
+			//Contando 3 fichas
+			if(col>=2 && row>=2 && s[row-1][col-1] == ma && s[row-2][col-2] == ma){
+				h+=300;
+			}
+			if(col>=1 && col<=5 && row>=1 && row<=4 && s[row-1][col-1] == ma && s[row+1][col+1] == ma){
+				h+=300;
+			}
+			if(col<=4 && row<=3 && s[row+1][col+1] == ma && s[row+2][col+2] == ma){
+				h+=300;
+			}
+
+			//Contando 2 fichas
+			if(col>=1 && row>=1 && s[row-1][col-1] == ma){
+				h+=200;
+			}
+			if(col<=5 && row<=4 && s[row+1][col+1] == ma){
+				h+=200;
+			}
+
+			//Contando 4 fichas(/)
+			if(col<=3 && row>=3 && s[row-1][col+1] == ma && s[row-2][col+2] == ma && s[row-3][col+3] == ma ){
+				h+=400;
+			}
+			if(col>=1 && col<=4 && row>=2 && row<=4 && s[row-1][col+1] == ma && s[row-2][col+2] == ma && s[row+1][col-1] == ma ){
+				h+=400;
+			}
+			if(col>=2 && col<=5 && row>=1 && row<=3 && s[row-1][col+1] == ma && s[row+1][col-1] == ma && s[row+2][col-2] == ma ){
+				h+=400;
+			}
+			if(col>=3 && row<=2 && s[row+1][col-1] == ma && s[row+2][col-2] == ma && s[row+3][col-3] == ma ){
+				h+=400;
+			}
+
+			//Contando 3 fichas
+			if(col<=4 && row>=2 && s[row-1][col+1] == ma && s[row-2][col+2] == ma){
+				h+=300;
+			}
+			if(col>=1 && col<=5 && row>=1 && row<=4 && s[row-1][col+1] == ma && s[row+1][col-1] == ma){
+				h+=300;
+			}
+			if(col>=2 && row<=3 && s[row+1][col-1] == ma && s[row+2][col-2] == ma){
+				h+=300;
+			}
+
+			//Contando 2 fichas
+			if(col<=5 && row>=1 && s[row-1][col+1] == ma){
+				h+=200;
+			}
+			if(col>=1 && row<=4 && s[row+1][col-1] == ma){
+				h+=200;
+			}
 
 
-		
-		
-		
+			////OPONENTE (HUMAN)
+
+			/////Horizontal/////
+			//Contando 4 fichas (winning turn)
+			if(col>=3 && s[row][col-1] == hu && s[row][col-2] == hu && s[row][col-3] == hu ){
+				h-=400;
+			}
+			if(col>=2 && col<=5 && s[row][col-1] == hu && s[row][col-2] == hu && s[row][col+1] == hu ){
+				h-=400;
+			}
+			if(col>=1 && col<=4 && s[row][col-1] == hu && s[row][col+1] == hu && s[row][col+2] == hu ){
+				h-=400;
+			}
+			if(col<=3 && s[row][col+1] == hu && s[row][col+2] == hu && s[row][col+3] == hu ){
+				h-=400;
+			}
+
+			//Contando 3 fichas
+			if(col>=2 && s[row][col-1] == hu && s[row][col-2] == hu ){
+				h-=300;
+			}
+			if(col<=4 && s[row][col+1] == hu && s[row][col+2] == hu){
+				h-=300;
+			}
+			if(col>=1 && col<=5 && s[row][col-1] == hu && s[row][col+1] == hu){
+				h-=300;
+			}
+
+			//Contando 2 fichas
+			if(col>=1 && s[row][col-1] == hu){
+				h-=200;
+			}
+			if(col<=5 && s[row][col+1] == hu){
+				h-=200;
+			}
+
+			/////Vertical/////
+			//Contando 4 fichas (winning turn)
+			if(row>=3 && s[row-1][col] == hu && s[row-2][col] == hu && s[row-3][col] == hu ){
+				h-=400;
+			}
+			if(row>=1 && row<=3 && s[row-1][col] == hu && s[row+1][col] == hu && s[row+2][col] == hu ){
+				h-=400;
+			}
+			if(row>=2 && row<=4 && s[row-1][col] == hu && s[row-2][col] == hu && s[row+1][col] == hu ){
+				h-=400;
+			}
+			if(row<=2 && s[row+1][col] == hu && s[row+2][col] == hu && s[row+3][col] == hu ){
+				h-=400;
+			}
+
+			//Contando 3 fichas
+			if(row>=2 && s[row-1][col] == hu && s[row-2][col] == hu){
+				h-=300;
+			}
+			if(row>=1 && row<=4 && s[row-1][col] == hu && s[row+1][col] == hu){
+				h-=300;
+			}
+			if(row<=3 && s[row+1][col] == hu && s[row+2][col] == hu){
+				h-=300;
+			}
+
+			//Contando 2 fichas
+			if(row>=1 && s[row-1][col] == hu){
+				h-=200;
+			}
+			if(row<=4 &&  s[row+1][col] == hu){
+				h-=200;
+			}
+
+			/////Diagonals//////
+
+			//Contando 4 fichas (\)
+			if(col>=3 && row>=3 && s[row-1][col-1] == hu && s[row-2][col-2] == hu && s[row-3][col-3] == hu ){
+				h-=400;
+			}
+			if(col>=2 && col<=5 && row>=2 && row<=4 && s[row-1][col-1] == hu && s[row-2][col-2] == hu && s[row+1][col+1] == hu ){
+				h-=400;
+			}
+			if(col>=1 && col<=4 && row>=1 && row<=3 && s[row-1][col-1] == hu && s[row+1][col+1] == hu && s[row+2][col+2] == hu ){
+				h-=400;
+			}
+			if(col<=3 && row<=2 && s[row+1][col+1] == hu && s[row+2][col+2] == hu && s[row+3][col+3] == hu ){
+				h-=400;
+			}
+
+			//Contando 3 fichas
+			if(col>=2 && row>=2 && s[row-1][col-1] == hu && s[row-2][col-2] == hu){
+				h-=300;
+			}
+			if(col>=1 && col<=5 && row>=1 && row<=4 && s[row-1][col-1] == hu && s[row+1][col+1] == hu){
+				h-=300;
+			}
+			if(col<=4 && row<=3 && s[row+1][col+1] == hu && s[row+2][col+2] == hu){
+				h-=300;
+			}
+
+			//Contando 2 fichas
+			if(col>=1 && row>=1 && s[row-1][col-1] == hu){
+				h-=200;
+			}
+			if(col<=5 && row<=4 && s[row+1][col+1] == hu){
+				h-=200;
+			}
+
+			//Contando 4 fichas(/)
+			if(col<=3 && row>=3 && s[row-1][col+1] == hu && s[row-2][col+2] == hu && s[row-3][col+3] == hu ){
+				h-=400;
+			}
+			if(col>=1 && col<=4 && row>=2 && row<=4 && s[row-1][col+1] == hu && s[row-2][col+2] == hu && s[row+1][col-1] == hu ){
+				h-=400;
+			}
+			if(col>=2 && col<=5 && row>=1 && row<=3 && s[row-1][col+1] == hu && s[row+1][col-1] == hu && s[row+2][col-2] == hu ){
+				h-=400;
+			}
+			if(col>=3 && row<=2 && s[row+1][col-1] == hu && s[row+2][col-2] == hu && s[row+3][col-3] == hu ){
+				h-=400;
+			}
+
+			//Contando 3 fichas
+			if(col<=4 && row>=2 && s[row-1][col+1] == hu && s[row-2][col+2] == hu){
+				h-=300;
+			}
+			if(col>=1 && col<=5 && row>=1 && row<=4 && s[row-1][col+1] == hu && s[row+1][col-1] == hu){
+				h-=300;
+			}
+			if(col>=2 && row<=3 && s[row+1][col-1] == hu && s[row+2][col-2] == hu){
+				h-=300;
+			}
+
+			//Contando 2 fichas
+			if(col<=5 && row>=1 && s[row-1][col+1] == hu){
+				h-=200;
+			}
+			if(col>=1 && row<=4 && s[row+1][col-1] == hu){
+				h-=200;
+			}
+		}
+		else{ //Game is over (some one won or tie)
+			//System.out.println("Finishing board: \n" + n.getBoard().toString());
+
+			if(n.getBoard().getWinner() == Play.HUMAN){//human
+				//				System.out.println("HUMAN WON! \n");
+				//				System.out.println(n.getBoard());
+				h = Integer.MIN_VALUE;
+			}
+			else if(n.getBoard().getWinner() == Play.MACHINE){//machine
+				//				System.out.println("MACHINE WON!");
+				//				System.out.println(n.getBoard());
+				h = Integer.MAX_VALUE;
+			}
+			else{//tie
+				//				System.out.println("TIEEEEEEEEEEE!");
+				h = 0;	
+			}
+		}
+
 		//System.out.println("returning h = " + h + " for s["+ row +"]["+col+"]");
-		
-		
+
 		n.setMinMaxValue(h);
 		return h;
 	}
-	
-	
+
+
 
 }

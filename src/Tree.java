@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Tree {
-	public static final int MAX_DEPTH = 4;
+	public static final int MAX_DEPTH = 6;
 	
 	private Node root;
 	private int count = 0;
@@ -22,6 +22,7 @@ public class Tree {
 				currentBoard.move(i);//se hace la movida & se invierte el nextPlayer.
 				Node child = new Node(i,parent.getDepth()+1, currentBoard);
 				parent.addChild(child);
+				count++;
 //				if(child.isLeaf()){
 //					System.out.println("Board (leaf): " + ++count + "\n");
 //					System.out.println(child.getBoard());
@@ -52,6 +53,10 @@ public class Tree {
 				iterate(child);
 			}
 		}
+	}
+	
+	public int getNumNodes(){
+		return this.count;
 	}
 	
 
