@@ -1,5 +1,5 @@
 public class Tree {
-	public static final int MAX_DEPTH = 6;
+	public static final int MAX_DEPTH = 4;
 	
 	private Node root;
 	private int count = 0;

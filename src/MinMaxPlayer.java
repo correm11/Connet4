@@ -46,18 +46,7 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 	@Override
 	//n=> root node of the current tree
 	public int minMaxResult(Node n) {
-		int nMinMaxValue = 0;
-
-		//		if(n.getBoard().nextPlayer() == Play.HUMAN){///////////////////
-		//			System.out.println("N board player = HUMAN");
-		//			nMinMaxValue = this.getMin(n);
-		//		}
-		//		else{
-		//			System.out.println("N board player = MACHINE");
-		//			nMinMaxValue = this.getMax(n);
-		//		}
-
-		nMinMaxValue = this.getMax(n);
+		int nMinMaxValue = this.getMax(n);
 		//this.currentTree.iterate(n);
 		//System.out.println("MINMAX VALUE = " + nMinMaxValue);
 		int moveTo = 0;
@@ -87,7 +76,7 @@ public class MinMaxPlayer implements MinMaxPlayerInterface {
 		Board newBoard = new Board(-1,7,6);
 		newBoard.copyBoard(currentGameBoard);
 		this.currentTree = new Tree(newBoard);//creates a tree with its children (4 levels) and the root node that contains a copy of currentBoard
-		System.out.println("Total number of nodes generated: " + this.currentTree.getNumNodes());
+		//System.out.println("Total number of nodes generated: " + this.currentTree.getNumNodes());
 		int moveTo = this.minMaxResult(this.currentTree.getRoot());
 		currentGameBoard.move(moveTo);
 	}
