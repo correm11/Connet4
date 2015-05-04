@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+/**
+ * This class represents a node of the Tree.  It contains the current state of the board and
+ * a list of its children nodes.
+ */
 public class Node {
 	private int identifier;//in which column the token is thrown
 	private int depth;

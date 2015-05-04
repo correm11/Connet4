@@ -1,5 +1,9 @@
 import java.util.Scanner;
 
+/**
+ * This class represents the game, its main method starts the game and is responsible of taking
+ * user inputs.  It also displays the current board to the user throughout the terminal.
+ */
 
 public class Play {
 	
