@@ -1,4 +1,12 @@
 
+/**
+ * This class are in charge of manage the board of the game. This class
+ * has the task of perform the moves in the board. Also the class
+ * display and verify one of the player has win.
+ * 
+ * @author all members
+ *
+ */
 public class Board implements ConnectFourBoardInterface{
 
 	private int[][] board;
@@ -39,6 +47,10 @@ public class Board implements ConnectFourBoardInterface{
 
 	}
 
+	/* 
+	 * This method perform the moves in the board.
+	 * 
+	 */
 	@Override
 	public boolean move(int column) {
 		if ( (column < 0) || (column > this.getAmountOfColums() - 1)){
@@ -99,7 +111,7 @@ public class Board implements ConnectFourBoardInterface{
 	}
 
 	/* 
-	 * This method return -1 if the board don't have a winner else
+	 * This method make winner to -1 if the board don't have a winner else
 	 * return the winner player. 
 	 * 
 	 * This method should be call **after** every move.
@@ -251,23 +263,14 @@ public class Board implements ConnectFourBoardInterface{
 		return this.column[column];
 	}
 
-	/**
-	 * @return the amountOfRows
-	 */
 	public int getAmountOfRows() {
 		return this.amountOfRows;
 	}
 
-	/**
-	 * @return the amountOfColums
-	 */
 	public int getAmountOfColums() {
 		return this.amountOfColums;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		String result = "    ";
