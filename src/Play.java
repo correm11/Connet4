@@ -19,6 +19,7 @@ public class Play {
 			}
 			else{
 				//User inputs
+				System.out.println("Please enter a column number (0-6):");
 				Scanner in = new Scanner(System.in);
 				int input = in.nextInt();
 				if(input>=0 && input <=6){
@@ -31,14 +32,15 @@ public class Play {
 			}
 		}
 		//Game ended:
+		System.out.println("\n");
 		if(gameBoard.getWinner()==HUMAN){
-			System.out.println("::::::::YOU WON!::::::::");
+			System.out.println(":::::::::::::::::::YOU WON!:::::::::::::::::::");
 		}
 		else if(gameBoard.getWinner()==MACHINE){
-			System.out.println("::::::::MACHINE WON!::::::::");
+			System.out.println(":::::::::::::::::MACHINE WON!:::::::::::::::::");
 		}
 		else{
-			System.out.println("::::::::GAME ENDED IN A DRAW!::::::::");
+			System.out.println("::::::::::::GAME ENDED IN A DRAW!:::::::::::::");
 		}
 		System.out.println(gameBoard.toString());
 

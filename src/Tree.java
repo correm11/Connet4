@@ -1,3 +1,8 @@
+/**
+ * This class represents the Tree of depth MAX_DEPTH.  It contains the root node of the tree,
+ * which in turn contains its direct succesors.  Every node has 7 children, unless the node is
+ * a leaf or some columns of the board are already full.
+ */
 public class Tree {
 	public static final int MAX_DEPTH = 4;
 	

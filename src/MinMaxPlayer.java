@@ -1,4 +1,7 @@
-
+/**
+ * This class represents the MinMax Agent.  For every turn it creates a temporary tree
+ * and picks the move with the highest propagated MinMax Value.
+ */
 public class MinMaxPlayer implements MinMaxPlayerInterface {
 	private Tree currentTree;
 
